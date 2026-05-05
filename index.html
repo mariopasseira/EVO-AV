@@ -548,19 +548,33 @@
     /* ════════════════════════
        MOBILE
     ════════════════════════ */
+    /* Mobile menu overlay — fora da nav para evitar backdrop-filter stacking context */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 32px; z-index: 98;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-d);
+      font-size: 1.8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--text);
+    }
+    .mobile-menu .cta {
+      color: var(--accent);
+      padding: 10px 24px;
+      border: 1px solid var(--accent);
+    }
+
     @media (max-width: 860px) {
       body { cursor: auto; }
       #cur-outer, #cur-inner { display: none; }
       .hamburger { display: flex; }
       .nav__links { display: none; }
-      .nav__links.open {
-        display: flex; flex-direction: column;
-        position: fixed; inset: 0;
-        background: var(--bg);
-        align-items: center; justify-content: center;
-        gap: 32px; z-index: 99;
-      }
-      .nav__links.open a { font-size: 1.8rem; color: var(--text); }
       .about__grid { grid-template-columns: 1fr; }
       .hero__title { font-size: clamp(2.2rem, 12vw, 4rem); }
     }
@@ -695,6 +709,15 @@
     </div>
   </div>
 </nav>
+
+<!-- ══ MOBILE MENU — fora da nav para não ser afetado pelo backdrop-filter ══ -->
+<div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+  <a href="#inicio">Início</a>
+  <a href="#sobre-nos">Sobre Nós</a>
+  <a href="#portfolio">Portfólio</a>
+  <a href="#clientes">Clientes</a>
+  <a href="contacto.html" class="cta">Contacto</a>
+</div>
 
 <!-- ══ HERO — vídeo horizontal ══ -->
 <section class="hero" id="inicio" aria-label="Início">
@@ -1058,30 +1081,32 @@
   }
 
   /* ── Hamburger ── */
-  const burger = document.getElementById('hamburger');
-  const links  = document.getElementById('navLinks');
+  const burger   = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
 
   function openMenu() {
-    links.classList.add('open');
+    mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
     burger.classList.add('open');
     burger.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
   function closeMenu() {
-    links.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
     burger.classList.remove('open');
     burger.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
 
   burger.addEventListener('click', () => {
-    links.classList.contains('open') ? closeMenu() : openMenu();
+    mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
   });
-  links.addEventListener('click', e => {
+  mobileMenu.addEventListener('click', e => {
     if (e.target.tagName === 'A') closeMenu();
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && links.classList.contains('open')) closeMenu();
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
   });
 
   /* ════════════════════════════════
@@ -1114,10 +1139,20 @@
     carDots.forEach((d, i) => d.classList.toggle('active', i === cur));
   }
 
-  function playAll() {
-    carSlides.forEach(s => {
+  const THUMB_TIME = 1; // segundo de thumbnail para vídeos inativos
+
+  function updatePlayback() {
+    carSlides.forEach((s, i) => {
       const v = s.querySelector('video');
-      v.play().catch(() => {});
+      if (i === cur) {
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+        // seek para frame fixo só se ainda não está lá (evita flash repetido)
+        if (Math.abs(v.currentTime - THUMB_TIME) > 0.5) {
+          v.currentTime = THUMB_TIME;
+        }
+      }
     });
   }
 
@@ -1128,7 +1163,7 @@
     updateVolIcon(carSlides[cur], true);
     cur = ((cur + dir) % n + n) % n;
     applyStates();
-    playAll();
+    updatePlayback();
     setTimeout(() => animating = false, 680);
   }
 
@@ -1160,7 +1195,7 @@
     updateVolIcon(carSlides[cur], true);
     cur = t;
     applyStates();
-    playAll();
+    updatePlayback();
   }));
 
   // Click side cards to navigate
@@ -1192,7 +1227,7 @@
 
   // Init
   applyStates();
-  playAll();
+  updatePlayback();
 
 })();
 </script>
