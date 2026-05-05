@@ -167,13 +167,16 @@
     .nav__links .cta:hover { background: var(--accent); color: var(--bg); }
     .hamburger {
       display: none; flex-direction: column;
-      gap: 5px; padding: 8px;
+      gap: 5px; padding: 8px; z-index: 101; position: relative;
     }
     .hamburger span {
       display: block; width: 24px; height: 1.5px;
       background: var(--text);
       transition: transform .3s, opacity .3s;
     }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
     /* ════════════════════════
        HERO — horizontal video
@@ -359,8 +362,7 @@
       transition:
         transform .65s var(--ease-expo),
         opacity   .65s var(--ease-expo),
-        filter    .65s var(--ease-expo),
-        z-index   0s .325s;
+        filter    .65s var(--ease-expo);
     }
     .car-slide video {
       width: 100%; height: 100%;
@@ -372,10 +374,6 @@
       transform: translateX(0) scale(1);
       opacity: 1; filter: brightness(1);
       z-index: 3;
-      transition:
-        transform .65s var(--ease-expo),
-        opacity   .65s var(--ease-expo),
-        filter    .65s var(--ease-expo);
     }
     .car-slide[data-state="prev"] {
       transform: translateX(-72%) scale(0.82);
@@ -1062,15 +1060,28 @@
   /* ── Hamburger ── */
   const burger = document.getElementById('hamburger');
   const links  = document.getElementById('navLinks');
+
+  function openMenu() {
+    links.classList.add('open');
+    burger.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    links.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
   burger.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
+    links.classList.contains('open') ? closeMenu() : openMenu();
   });
   links.addEventListener('click', e => {
-    if (e.target.tagName === 'A') {
-      links.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-    }
+    if (e.target.tagName === 'A') closeMenu();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && links.classList.contains('open')) closeMenu();
   });
 
   /* ════════════════════════════════
@@ -1103,26 +1114,21 @@
     carDots.forEach((d, i) => d.classList.toggle('active', i === cur));
   }
 
-  function pauseAll() {
-    carSlides.forEach(s => s.querySelector('video').pause());
-  }
-
-  function playActive() {
-    const v = carSlides[cur].querySelector('video');
-    v.currentTime = 0;
-    v.play().catch(() => {});
+  function playAll() {
+    carSlides.forEach(s => {
+      const v = s.querySelector('video');
+      v.play().catch(() => {});
+    });
   }
 
   function go(dir) {
     if (animating) return;
     animating = true;
-    // Mute outgoing
     carSlides[cur].querySelector('video').muted = true;
     updateVolIcon(carSlides[cur], true);
     cur = ((cur + dir) % n + n) % n;
     applyStates();
-    pauseAll();
-    playActive();
+    playAll();
     setTimeout(() => animating = false, 680);
   }
 
@@ -1150,14 +1156,11 @@
   carDots.forEach(d => d.addEventListener('click', () => {
     const t = +d.dataset.dot;
     if (t === cur) return;
-    const dir = ((t - cur) % n + n) % n <= n / 2 ? 1 : -1;
-    // jump directly
     carSlides[cur].querySelector('video').muted = true;
     updateVolIcon(carSlides[cur], true);
     cur = t;
     applyStates();
-    pauseAll();
-    playActive();
+    playAll();
   }));
 
   // Click side cards to navigate
@@ -1189,7 +1192,7 @@
 
   // Init
   applyStates();
-  playActive();
+  playAll();
 
 })();
 </script>
