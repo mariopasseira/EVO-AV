@@ -156,8 +156,33 @@
       text-shadow: 0 0 10px oklch(58% 0.22 262 / 0.5);
     }
     .nav__links .cta:hover { background: var(--accent); color: var(--bg); text-shadow: none; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
-    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--text); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 101; position: relative; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--text); transition: transform .3s, opacity .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu overlay — fora da nav para evitar backdrop-filter stacking context */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 32px; z-index: 98;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-d);
+      font-size: 1.8rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--text);
+    }
+    .mobile-menu .cta {
+      color: var(--accent);
+      padding: 10px 24px;
+      border: 1px solid var(--accent);
+    }
 
     /* ════════════════
        PAGE HEADER
@@ -433,13 +458,6 @@
       #cur-outer, #cur-inner { display: none; }
       .hamburger { display: flex; }
       .nav__links { display: none; }
-      .nav__links.open {
-        display: flex; flex-direction: column;
-        position: fixed; inset: 0; background: var(--bg);
-        align-items: center; justify-content: center;
-        gap: 32px; z-index: 99;
-      }
-      .nav__links.open a { font-size: 1.8rem; color: var(--text); }
       .contact-grid { grid-template-columns: 1fr; }
       .form__row { grid-template-columns: 1fr; }
       .footer__inner { justify-content: center; text-align: center; }
@@ -478,6 +496,15 @@
     </div>
   </div>
 </nav>
+
+<!-- ══ MOBILE MENU — fora da nav para não ser afetado pelo backdrop-filter ══ -->
+<div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+  <a href="index.html#inicio">Início</a>
+  <a href="index.html#sobre-nos">Sobre Nós</a>
+  <a href="index.html#portfolio">Portfólio</a>
+  <a href="index.html#clientes">Clientes</a>
+  <a href="contacto.html" class="cta">Contacto</a>
+</div>
 
 <!-- PAGE HEADER -->
 <header class="page-header">
@@ -719,17 +746,32 @@
   }
 
   /* ── Hamburger ── */
-  const burger = document.getElementById('hamburger');
-  const links  = document.getElementById('navLinks');
+  const burger     = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function openMenu() {
+    mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    burger.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
   burger.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
+    mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
   });
-  links.addEventListener('click', e => {
-    if (e.target.tagName === 'A') {
-      links.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-    }
+  mobileMenu.addEventListener('click', e => {
+    if (e.target.tagName === 'A') closeMenu();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
   });
 
   /* ── Form submit ── */
