@@ -573,7 +573,7 @@
         <h2 class="form-panel__title">Conte-nos sobre<br>o seu projeto</h2>
         <p class="form-panel__subtitle">Preencha o formulário e receberá uma proposta técnica personalizada.</p>
 
-        <form class="form" id="contactForm" novalidate>
+        <form class="form" id="contactForm" action="https://formspree.io/f/xvzlkgay" method="POST" novalidate>
           <div class="form__row">
             <div class="form__field">
               <label class="form__label" for="fullName">Nome Completo<span class="form__required">*</span></label>
@@ -777,14 +777,30 @@
   /* ── Form submit ── */
   const form      = document.getElementById('contactForm');
   const successEl = document.getElementById('formSuccess');
-  form.addEventListener('submit', e => {
+  const submitBtn = form.querySelector('.form__submit');
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!form.checkValidity()) {
       form.querySelector(':invalid').focus(); return;
     }
-    form.style.display = 'none';
-    successEl.classList.add('visible');
-    successEl.querySelector('h3').focus();
+    submitBtn.disabled = true;
+    submitBtn.querySelector('span').textContent = 'A enviar…';
+
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      form.style.display = 'none';
+      successEl.classList.add('visible');
+      successEl.querySelector('h3').focus();
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.querySelector('span').textContent = 'Erro — tente novamente';
+    }
   });
 })();
 </script>
