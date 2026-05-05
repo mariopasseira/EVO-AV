@@ -1145,6 +1145,7 @@
     carSlides.forEach((s, i) => {
       const v = s.querySelector('video');
       if (i === cur) {
+        v.currentTime = 0;
         v.play().catch(() => {});
       } else {
         v.pause();
