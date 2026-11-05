@@ -17,9 +17,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="imagens/logo/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="imagens/logo/favicon-512.png" />
   <link rel="apple-touch-icon" href="imagens/logo/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -68,7 +68,7 @@
             </div>
             <div class="info" data-reveal style="--d:.12s">
               <div class="info__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg></div>
-              <div><span class="info__label">Localização</span><strong>Alenquer, Lisboa</strong><small>Produções em todo o território nacional</small></div>
+              <div><span class="info__label">Localização</span><strong>Casal dos Remédios, Azedia</strong><small>2580-552 Ribafria, Alenquer · Produções em todo o país</small></div>
             </div>
             <div class="info" data-reveal style="--d:.18s">
               <div class="info__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -132,12 +132,26 @@
               <label for="mensagem">Mensagem <span>*</span></label>
               <textarea id="mensagem" name="mensagem" placeholder="Local, dimensão do evento e necessidades técnicas (som, luz, vídeo, palco, streaming…)" required></textarea>
             </div>
-            <p class="form__hint">Ao enviar, aceita que utilizemos os seus dados apenas para responder a este pedido.</p>
+            <p class="form__hint">Os dados enviados são usados apenas para responder a este pedido, nos termos da <a href="legal.html#privacidade">política de privacidade</a>.</p>
             <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
             <button type="submit" class="btn btn--primary btn--lg form__submit">Enviar pedido <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </form>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ============ REUNIÃO ONLINE ============ -->
+    <section class="section" id="reuniao" hidden>
+      <div class="container">
+        <div class="section-head section-head--center">
+          <p class="eyebrow" data-reveal>Reunião online</p>
+          <h2 class="h-section" data-reveal style="--d:.06s">Prefere falar connosco? Marque uma reunião.</h2>
+          <p class="lead" data-reveal style="--d:.12s">Escolha o dia e a hora que lhe derem jeito. Recebe de imediato o convite com o link do Google Meet.</p>
+        </div>
+        <div class="booking" data-reveal>
+          <iframe data-src="" title="Marcar reunião com a Sweet River Audiovisuais" loading="lazy"></iframe>
+        </div>
       </div>
     </section>
   </main>
@@ -190,6 +204,15 @@
             <li>Segunda a sexta, 11:00 às 19:00</li>
           </ul>
         </div>
+      </div>
+      <div class="footer__legal">
+        <ul class="footer__legal-links">
+          <li><a class="footer__lr" href="https://www.livroreclamacoes.pt/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4zM5 17h14M9 8h6M9 11h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Livro de Reclamações</a></li>
+          <li><a href="legal.html#ral">Resolução de litígios</a></li>
+          <li><a href="legal.html#privacidade">Política de privacidade</a></li>
+          <li><a href="legal.html">Informação legal</a></li>
+        </ul>
+        <p>Sweet River Unipessoal, Lda. · NIPC 519 109 350 · Casal dos Remédios, Azedia, 2580-552 Ribafria, Alenquer · Capital social 10 000 € · Conservatória do Registo Comercial de Odivelas, matrícula 519109350</p>
       </div>
       <div class="footer__bottom">
         <span>© <span data-year>2026</span> Sweet River Audiovisuais. Todos os direitos reservados.</span>
