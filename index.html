@@ -3,1236 +3,393 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EVO AV Factory — Experiências Audiovisuais</title>
-  <meta name="description" content="Empresa portuguesa de produção audiovisual especializada em som, iluminação, vídeo e palco para concertos, festivais e eventos corporativos." />
-  <link rel="icon" type="image/png" href="imagens/vo_av_icon.png" />
+  <title>Sweet River Audiovisuais | Produção de eventos: som, luz, vídeo e estruturas</title>
+  <meta name="description" content="Produtora portuguesa de audiovisual para concertos, festivais, eventos corporativos e produções ao vivo. Som, iluminação, vídeo e LED, palco e rigging, streaming e produção técnica. Alenquer, Lisboa." />
+  <link rel="canonical" href="https://evoav.pt/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_PT" />
+  <meta property="og:site_name" content="Sweet River Audiovisuais" />
+  <meta property="og:title" content="Sweet River Audiovisuais | Produção de eventos" />
+  <meta property="og:description" content="Som, luz, vídeo e estruturas para concertos, festivais, eventos corporativos e produções ao vivo." />
+  <meta property="og:url" content="https://evoav.pt/" />
+  <meta property="og:image" content="https://evoav.pt/imagens/fotos/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0b1240" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagens/logo/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="imagens/logo/favicon-512.png" />
+  <link rel="apple-touch-icon" href="imagens/logo/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg:         oklch(11% 0.018 252);
-      --bg-surface: oklch(14% 0.022 252);
-      --bg-raised:  oklch(17% 0.025 252);
-      --border:     oklch(22% 0.028 252);
-      --accent:     oklch(58% 0.22 262);
-      --accent-glow:oklch(58% 0.22 262 / 0.2);
-      --text:       oklch(96% 0.005 252);
-      --text-dim:   oklch(68% 0.015 252);
-      --text-muted: oklch(46% 0.012 252);
-      --ease:       cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-expo:  cubic-bezier(0.22, 1, 0.36, 1);
-      --font-d: 'Barlow Condensed', sans-serif;
-      --font-b: 'Epilogue', sans-serif;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: auto; }
-    body {
-      font-family: var(--font-b);
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      cursor: none;
-    }
-    a  { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-    button { cursor: none; border: none; background: none; font: inherit; }
-    img { display: block; max-width: 100%; }
-
-    /* ── Grain texture overlay ── */
-    #grain {
-      position: fixed;
-      inset: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.018;
-    }
-
-    /* ── Scroll progress ── */
-    #progress {
-      position: fixed; top: 0; left: 0;
-      height: 2px; width: 0%;
-      background: var(--accent);
-      box-shadow: 0 0 6px 1px var(--accent), 0 0 18px var(--accent);
-      z-index: 9999;
-      pointer-events: none;
-    }
-
-    /* ── Custom cursor ── */
-    #cur-outer {
-      position: fixed; top: 0; left: 0;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: oklch(58% 0.22 262 / 0.1);
-      border: 1px solid oklch(58% 0.22 262 / 0.5);
-      pointer-events: none; z-index: 9998;
-      translate: -50% -50%;
-      box-shadow: 0 0 18px oklch(58% 0.22 262 / 0.15);
-      transition: width .3s var(--ease), height .3s var(--ease), background .3s, border-color .3s;
-    }
-    #cur-outer.big {
-      width: 54px; height: 54px;
-      background: oklch(58% 0.22 262 / 0.16);
-      border-color: var(--accent);
-      box-shadow: 0 0 28px oklch(58% 0.22 262 / 0.3);
-    }
-    #cur-inner {
-      position: fixed; top: 0; left: 0;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      pointer-events: none; z-index: 9998;
-      translate: -50% -50%;
-      box-shadow: 0 0 6px var(--accent);
-    }
-
-    /* ── Container ── */
-    .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
-
-    /* ── Reveal ── */
-    .rv {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .7s var(--ease), transform .7s var(--ease);
-    }
-    .rv.on { opacity: 1; transform: none; }
-    .rv-1 { transition-delay: .08s; }
-    .rv-2 { transition-delay: .16s; }
-    .rv-3 { transition-delay: .24s; }
-
-    /* ── Split heading ── */
-    .sh .ln {
-      overflow: hidden; display: block;
-      padding-bottom: 0.15em; margin-bottom: -0.15em;
-    }
-    .sh .ln-i {
-      display: block;
-      transform: translateY(110%);
-      transition: transform .85s var(--ease-expo);
-    }
-    .sh.on .ln-i { transform: none; }
-    .sh.on .ln-i:nth-child(2) { transition-delay: .08s; }
-    .sh.on .ln-i:nth-child(3) { transition-delay: .16s; }
-    .sh.on .ln-i:nth-child(4) { transition-delay: .24s; }
-
-    /* ════════════════════════
-       NAVBAR
-    ════════════════════════ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 24px 0;
-      opacity: 0;
-      transition: background .4s var(--ease), padding .4s var(--ease),
-                  backdrop-filter .4s, opacity .5s var(--ease);
-    }
-    .nav.ready { opacity: 1; }
-    .nav.scrolled {
-      padding: 14px 0;
-      background: oklch(11% 0.018 252 / 0.9);
-      backdrop-filter: blur(18px) saturate(1.5);
-      -webkit-backdrop-filter: blur(18px) saturate(1.5);
-    }
-    .nav__row { display: flex; align-items: center; justify-content: space-between; }
-    .nav__logo {
-      display: flex; align-items: center;
-    }
-    .nav__logo img { height: 56px; width: auto; display: block; }
-    .nav__links { display: flex; align-items: center; gap: 32px; }
-    .nav__links li { position: relative; }
-    .nav__links a {
-      font-family: var(--font-d);
-      font-size: .85rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--text-dim);
-      transition: color .2s;
-      padding-bottom: 3px;
-    }
-    .nav__links a:not(.cta)::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; width: 100%; height: 1px;
-      background: var(--accent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform .3s var(--ease);
-    }
-    .nav__links a:not(.cta):hover { color: var(--text); }
-    .nav__links a:not(.cta):hover::after { transform: scaleX(1); }
-    .nav__links .cta {
-      color: var(--accent);
-      padding: 8px 18px;
-      border: 1px solid var(--accent);
-      transition: background .2s, color .2s;
-    }
-    .nav__links .cta:hover { background: var(--accent); color: var(--bg); }
-    .hamburger {
-      display: none; flex-direction: column;
-      gap: 5px; padding: 8px; z-index: 101; position: relative;
-    }
-    .hamburger span {
-      display: block; width: 24px; height: 1.5px;
-      background: var(--text);
-      transition: transform .3s, opacity .3s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* ════════════════════════
-       HERO — horizontal video
-    ════════════════════════ */
-    .hero {
-      position: relative;
-      height: 100svh;
-      overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero__video {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-    .hero__overlay {
-      position: absolute; inset: 0;
-      background: oklch(11% 0.018 252 / 0.55);
-      z-index: 1;
-    }
-    .hero__content {
-      position: relative; z-index: 2;
-      text-align: center;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 32px;
-    }
-    .hero__title {
-      font-family: var(--font-d);
-      font-size: clamp(3rem, 9vw, 8rem);
-      font-weight: 900; line-height: .92;
-      letter-spacing: -.01em;
-      text-transform: uppercase;
-    }
-    .hero__title em { font-style: italic; color: var(--accent); }
-    .hero__sub {
-      font-family: var(--font-d);
-      font-size: clamp(.8rem, 1.4vw, 1rem);
-      font-weight: 400; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--text-dim);
-    }
-
-    /* ════════════════════════
-       BUTTONS
-    ════════════════════════ */
-    .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--font-d);
-      font-size: .82rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      padding: 16px 36px;
-      transition: box-shadow .3s, transform .2s var(--ease);
-      will-change: transform;
-    }
-    .btn--primary {
-      background: var(--accent); color: var(--bg);
-      box-shadow: 0 0 32px var(--accent-glow);
-    }
-    .btn--primary:hover { box-shadow: 0 0 56px oklch(58% 0.22 262 / 0.45); }
-    .btn--ghost { color: var(--text-dim); border: 1px solid var(--border); }
-    .btn--ghost:hover { color: var(--text); border-color: var(--text-muted); }
-    .btn svg { flex-shrink: 0; transition: transform .25s var(--ease); }
-    .btn:hover svg { transform: translateX(5px); }
-
-    /* ════════════════════════
-       ABOUT
-    ════════════════════════ */
-    .about {
-      background: var(--bg-surface);
-      padding: clamp(64px, 10vw, 120px) 0;
-    }
-    .about__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(48px, 8vw, 96px);
-      align-items: start;
-    }
-    .about__label {
-      font-family: var(--font-d);
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .5s var(--ease), transform .5s var(--ease);
-    }
-    .about__label.on { opacity: 1; transform: none; }
-    .about__heading {
-      font-family: var(--font-d);
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 800; line-height: 1;
-      letter-spacing: -.01em; text-transform: uppercase;
-    }
-    .about__heading em { font-style: italic; color: var(--accent); }
-    .about__divider {
-      width: 48px; height: 2px;
-      background: var(--accent);
-      margin: 24px 0 32px;
-      transform: scaleX(0); transform-origin: left;
-      transition: transform .6s var(--ease) .2s;
-    }
-    .about__divider.on { transform: scaleX(1); }
-    .about__body {
-      font-size: 1.02rem; line-height: 1.78;
-      color: var(--text-dim); max-width: 54ch;
-      margin-bottom: 40px;
-    }
-
-    /* ════════════════════════
-       VIDEOS — vertical carousel
-    ════════════════════════ */
-    .vids {
-      background: var(--bg);
-      padding: clamp(64px, 10vw, 120px) 0;
-    }
-    .vids__header {
-      margin-bottom: 48px;
-      display: flex; align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-    }
-    .vids__heading {
-      font-family: var(--font-d);
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 800; line-height: 1;
-      letter-spacing: -.01em; text-transform: uppercase;
-    }
-    .vids__heading em { font-style: italic; color: var(--accent); }
-    .vids__label {
-      font-family: var(--font-d);
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 12px;
-      text-shadow: 0 0 10px oklch(58% 0.22 262 / 0.55);
-    }
-
-    /* Carousel stage */
-    .carousel {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      height: clamp(380px, 65vw, 640px);
-      overflow: hidden;
-    }
-
-    /* Arrow buttons */
-    .car-arrow {
-      position: absolute;
-      top: 50%; translate: 0 -50%;
-      z-index: 10;
-      width: 52px; height: 52px;
-      border: 1px solid var(--border);
-      background: oklch(11% 0.018 252 / 0.7);
-      backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-dim);
-      transition: border-color .25s, color .25s, background .25s, box-shadow .25s;
-    }
-    .car-arrow:hover {
-      border-color: var(--accent); color: var(--accent);
-      box-shadow: 0 0 16px oklch(58% 0.22 262 / 0.45), 0 0 40px oklch(58% 0.22 262 / 0.2);
-    }
-    .car-arrow--prev { left: 0; }
-    .car-arrow--next { right: 0; }
-
-    /* Cards */
-    .car-track {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%; height: 100%;
-      position: relative;
-    }
-    .car-slide {
-      position: absolute;
-      aspect-ratio: 9/16;
-      height: 100%;
-      overflow: hidden;
-      background: var(--bg-raised);
-      border: 1px solid var(--border);
-      transition:
-        transform .65s var(--ease-expo),
-        opacity   .65s var(--ease-expo),
-        filter    .65s var(--ease-expo);
-    }
-    .car-slide video {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
-
-    /* States: prev, active, next, hidden */
-    .car-slide[data-state="active"] {
-      transform: translateX(0) scale(1);
-      opacity: 1; filter: brightness(1);
-      z-index: 3;
-    }
-    .car-slide[data-state="prev"] {
-      transform: translateX(-72%) scale(0.82);
-      opacity: .5; filter: brightness(.55);
-      z-index: 2;
-    }
-    .car-slide[data-state="next"] {
-      transform: translateX(72%) scale(0.82);
-      opacity: .5; filter: brightness(.55);
-      z-index: 2;
-    }
-    .car-slide[data-state="hidden-l"] {
-      transform: translateX(-130%) scale(0.7);
-      opacity: 0; filter: brightness(.3);
-      z-index: 1;
-    }
-    .car-slide[data-state="hidden-r"] {
-      transform: translateX(130%) scale(0.7);
-      opacity: 0; filter: brightness(.3);
-      z-index: 1;
-    }
-
-    /* Volume button — on active card */
-    .car-slide__vol {
-      position: absolute; bottom: 16px; right: 16px; z-index: 4;
-      width: 36px; height: 36px;
-      border: 1px solid oklch(96% 0.005 252 / 0.25);
-      border-radius: 50%;
-      background: oklch(11% 0.018 252 / 0.6);
-      backdrop-filter: blur(6px);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text);
-      opacity: 0;
-      transition: opacity .3s, border-color .25s, box-shadow .25s;
-      pointer-events: none;
-    }
-    .car-slide[data-state="active"] .car-slide__vol {
-      opacity: 1; pointer-events: auto;
-    }
-    .car-slide__vol:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 12px oklch(58% 0.22 262 / 0.5), 0 0 28px oklch(58% 0.22 262 / 0.25);
-      color: var(--accent);
-    }
-    .car-slide__vol svg { pointer-events: none; }
-
-    /* Label */
-    .car-slide__label {
-      position: absolute; bottom: 16px; left: 16px;
-      font-family: var(--font-d);
-      font-size: .7rem; font-weight: 600;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: oklch(96% 0.005 252 / 0.45);
-      opacity: 0;
-      transition: opacity .4s;
-      pointer-events: none;
-    }
-    .car-slide[data-state="active"] .car-slide__label { opacity: 1; }
-
-    /* Dots */
-    .slider-dots {
-      display: flex; gap: 8px;
-      justify-content: center;
-      margin-top: 28px;
-    }
-    .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--border);
-      transition: background .3s, transform .3s;
-      cursor: none;
-    }
-    .dot.active { background: var(--accent); transform: scale(1.5); }
-
-    /* ════════════════════════
-       CLIENTS LOGOS
-    ════════════════════════ */
-    .clients {
-      background: var(--bg-surface);
-      padding: clamp(48px, 7vw, 80px) 0;
-    }
-    .clients__label {
-      font-family: var(--font-d);
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .clients__row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      flex-wrap: wrap;
-      border: 1px solid var(--border);
-    }
-    .client-logo {
-      flex: 1 1 160px;
-      max-width: 200px;
-      padding: 28px 24px;
-      display: flex; align-items: center; justify-content: center;
-      border-right: 1px solid var(--border);
-      transition: background .25s;
-    }
-    .client-logo:last-child { border-right: none; }
-    .client-logo:hover { background: var(--bg-raised); }
-    .client-logo span {
-      font-family: var(--font-d);
-      font-size: .82rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: center;
-      line-height: 1.3;
-      transition: color .25s;
-    }
-    .client-logo:hover span { color: var(--text-dim); }
-
-    /* ════════════════════════
-       FOOTER
-    ════════════════════════ */
-    .footer {
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      padding: 48px 0 28px;
-    }
-    .footer__main {
-      display: flex; align-items: flex-start;
-      justify-content: space-between;
-      gap: 48px;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-    }
-    .footer__logo {
-      margin-bottom: 10px;
-    }
-    .footer__logo img { height: 40px; width: auto; display: block; }
-    .footer__tag {
-      font-family: var(--font-d);
-      font-size: .7rem; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--text-muted);
-    }
-    .footer__col-title {
-      font-family: var(--font-d);
-      font-size: .68rem; font-weight: 600;
-      letter-spacing: .2em; text-transform: uppercase;
-      color: var(--text-muted); margin-bottom: 20px;
-    }
-    .footer__nav { display: flex; flex-direction: column; gap: 12px; }
-    .footer__nav a {
-      font-size: .88rem; color: var(--text-dim);
-      transition: color .2s, padding-left .2s;
-    }
-    .footer__nav a:hover { color: var(--text); padding-left: 5px; }
-    .footer__contact p {
-      font-size: .88rem; color: var(--text-dim);
-      line-height: 1.7;
-    }
-    .footer__contact a { color: var(--accent); }
-    .footer__bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 24px; border-top: 1px solid var(--border);
-      flex-wrap: wrap; gap: 12px;
-    }
-    .footer__copy { font-size: .78rem; color: var(--text-muted); }
-    .footer__web {
-      font-family: var(--font-d);
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    /* ════════════════════════
-       MOBILE
-    ════════════════════════ */
-    /* Mobile menu overlay — fora da nav para evitar backdrop-filter stacking context */
-    .mobile-menu {
-      display: none;
-      position: fixed; inset: 0;
-      background: var(--bg);
-      flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 32px; z-index: 98;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-family: var(--font-d);
-      font-size: 1.8rem; font-weight: 600;
-      letter-spacing: .06em; text-transform: uppercase;
-      color: var(--text);
-    }
-    .mobile-menu .cta {
-      color: var(--accent);
-      padding: 10px 24px;
-      border: 1px solid var(--accent);
-    }
-
-    @media (max-width: 860px) {
-      body { cursor: auto; }
-      #cur-outer, #cur-inner { display: none; }
-      .hamburger { display: flex; }
-      .nav__links { display: none; }
-      .about__grid { grid-template-columns: 1fr; }
-      .hero__title { font-size: clamp(2.2rem, 12vw, 4rem); }
-    }
-    @media (max-width: 560px) {
-      .clients__row { gap: 0; }
-      .footer__main { flex-direction: column; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* ════════════════════════
-       GLOW — text & elements
-    ════════════════════════ */
-
-    /* Nav logo */
-    .nav__logo em {
-      text-shadow:
-        0 0 12px oklch(58% 0.22 262 / 0.8),
-        0 0 28px oklch(58% 0.22 262 / 0.4);
-    }
-
-    /* Hero headline — white lines */
-    .hero__title .ln-i {
-      text-shadow:
-        0 0 40px oklch(96% 0.005 252 / 0.25),
-        0 0 80px oklch(96% 0.005 252 / 0.1);
-    }
-    /* Hero headline — italic/accent line */
-    .hero__title em .ln-i {
-      text-shadow:
-        0 0 20px oklch(58% 0.22 262 / 0.9),
-        0 0 50px oklch(58% 0.22 262 / 0.55),
-        0 0 100px oklch(58% 0.22 262 / 0.25);
-    }
-
-    /* About heading — all lines glow (applied after anim via .glow-ready) */
-    .about__heading.glow-ready .ln {
-      overflow: visible;
-    }
-    .about__heading.glow-ready .ln-i {
-      text-shadow:
-        0 0 20px oklch(96% 0.005 252 / 0.35),
-        0 0 55px oklch(96% 0.005 252 / 0.15);
-    }
-    /* Accent word — blue glow on the ln-i inside em, overrides white */
-    .about__heading em { display: inline; }
-    .about__heading.glow-ready em .ln-i {
-      text-shadow:
-        0 0 12px oklch(58% 0.22 262 / 1),
-        0 0 28px oklch(58% 0.22 262 / 0.7),
-        0 0 60px oklch(58% 0.22 262 / 0.35);
-    }
-    /* About body text */
-    .about__body {
-      text-shadow: 0 0 24px oklch(68% 0.015 252 / 0.4);
-    }
-
-    /* Portfolio heading accent */
-    .vids__heading em {
-      text-shadow:
-        0 0 14px oklch(58% 0.22 262 / 0.85),
-        0 0 36px oklch(58% 0.22 262 / 0.45);
-    }
-
-    /* Section labels */
-    .clients__label,
-    .about__label {
-      text-shadow: 0 0 10px oklch(58% 0.22 262 / 0.55);
-    }
-
-    /* Primary CTA button */
-    .btn--primary {
-      text-shadow: 0 0 12px oklch(11% 0.018 252 / 0.4);
-    }
-
-    /* Active carousel card — subtle inner glow on border */
-    .car-slide[data-state="active"] {
-      box-shadow:
-        0 0 0 1px oklch(58% 0.22 262 / 0.35),
-        0 0 40px oklch(58% 0.22 262 / 0.18),
-        0 0 80px oklch(58% 0.22 262 / 0.08);
-    }
-
-    /* Nav CTA link */
-    .nav__links .cta {
-      text-shadow: 0 0 10px oklch(58% 0.22 262 / 0.5);
-    }
-    .nav__links .cta:hover {
-      text-shadow: none;
-    }
-
-    /* Dots active */
-    .dot.active {
-      box-shadow: 0 0 8px oklch(58% 0.22 262 / 0.8), 0 0 16px oklch(58% 0.22 262 / 0.4);
-    }
-
-    /* Footer logo */
-    .footer__logo em {
-      text-shadow:
-        0 0 10px oklch(58% 0.22 262 / 0.7),
-        0 0 24px oklch(58% 0.22 262 / 0.35);
-    }
-  </style>
+  <link rel="preconnect" href="https://res.cloudinary.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Sweet River Audiovisuais",
+    "alternateName": ["SRA", "Sweet River", "EVO AV Factory"],
+    "url": "https://evoav.pt/",
+    "logo": "https://evoav.pt/imagens/logo/favicon-512.png",
+    "image": "https://evoav.pt/imagens/fotos/og-image.jpg",
+    "description": "Produtora portuguesa de audiovisual para concertos, festivais, eventos corporativos e produções ao vivo: som, iluminação, vídeo e LED, palco e rigging, streaming e produção técnica.",
+    "email": "geral@swtriver.com",
+    "telephone": ["+351924106324", "+351915401322"],
+    "address": { "@type": "PostalAddress", "addressLocality": "Alenquer", "addressRegion": "Lisboa", "addressCountry": "PT" },
+    "areaServed": "PT",
+    "sameAs": ["https://www.instagram.com/sweetriver.av/", "https://www.tiktok.com/@sweet.river.audiov"]
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
 
-<div id="progress" aria-hidden="true"></div>
-<canvas id="grain" aria-hidden="true"></canvas>
-<div id="cur-outer" aria-hidden="true"></div>
-<div id="cur-inner"  aria-hidden="true"></div>
-
-<!-- ══ NAVBAR ══ -->
-<nav class="nav" id="nav" aria-label="Navegação principal">
-  <div class="wrap">
-    <div class="nav__row">
-      <a href="index.html" class="nav__logo"><img src="imagens/evo_av.png" alt="EVO AV Factory" /></a>
-      <ul class="nav__links" id="navLinks" role="list">
-        <li><a href="#inicio">Início</a></li>
-        <li><a href="#sobre-nos">Sobre Nós</a></li>
-        <li><a href="#portfolio">Portfólio</a></li>
+  <nav class="nav" id="nav" aria-label="Navegação principal">
+    <div class="container nav__row">
+      <a href="index.html" class="brand" aria-label="Sweet River Audiovisuais, início">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__text"><span class="brand__name">Sweet River</span><span class="brand__sub">Audiovisuais</span></span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="index.html" aria-current="page">Início</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="portfolio.html">Portfólio</a></li>
         <li><a href="#clientes">Clientes</a></li>
-        <li><a href="contacto.html" class="cta">Contacto</a></li>
+        <li><a href="contacto.html" class="btn btn--primary nav__cta">Pedir proposta</a></li>
       </ul>
-      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- ══ MOBILE MENU — fora da nav para não ser afetado pelo backdrop-filter ══ -->
-<div id="mobileMenu" class="mobile-menu" aria-hidden="true">
-  <a href="#inicio">Início</a>
-  <a href="#sobre-nos">Sobre Nós</a>
-  <a href="#portfolio">Portfólio</a>
-  <a href="#clientes">Clientes</a>
-  <a href="contacto.html" class="cta">Contacto</a>
-</div>
+  <main id="conteudo">
 
-<!-- ══ HERO — vídeo horizontal ══ -->
-<section class="hero" id="inicio" aria-label="Início">
-  <video
-    class="hero__video"
-    src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1777852514/evoav_horizontal_gugywz.mp4"
-    autoplay muted loop playsinline
-    aria-hidden="true"
-  ></video>
-  <div class="hero__overlay" aria-hidden="true"></div>
-  <div class="hero__content">
-    <h1 class="hero__title" id="heroTitle" aria-label="Experiências Audiovisuais que Elevam os Eventos">
-      <span class="ln"><span class="ln-i">Experiências</span></span>
-      <span class="ln"><em><span class="ln-i">Audiovisuais</span></em></span>
-      <span class="ln"><span class="ln-i">que Elevam</span></span>
-      <span class="ln"><span class="ln-i">os Eventos</span></span>
-    </h1>
-    <p class="hero__sub" id="heroSub" style="opacity:0;transform:translateY(18px)">
-      Som Profissional&nbsp;·&nbsp;Iluminação&nbsp;·&nbsp;Vídeo&nbsp;·&nbsp;Produção de Palco
-    </p>
-    <a href="contacto.html" class="btn btn--primary mag" id="heroCta" style="opacity:0;transform:translateY(18px)">
-      Começar Agora
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </div>
-</section>
-
-<!-- ══ ABOUT ══ -->
-<section class="about" id="sobre-nos" aria-labelledby="about-h">
-  <div class="wrap">
-    <div class="about__grid">
-
-      <div>
-        <p class="about__label rv" id="about-lbl">Quem Somos</p>
-        <h2 class="about__heading sh rv rv-1" id="about-h">
-          <span class="ln"><span class="ln-i">Uma Empresa</span></span>
-          <span class="ln"><span class="ln-i">Portuguesa de</span></span>
-          <span class="ln"><span class="ln-i">Produção</span></span>
-          <span class="ln"><em><span class="ln-i">Audiovisual</span></em></span>
-        </h2>
-        <div class="about__divider rv rv-2" id="about-div"></div>
-        <a href="contacto.html" class="btn btn--primary rv rv-3 mag">
-          Começar Agora
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio">
+      <div class="hero__media" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="metadata"
+          poster="https://res.cloudinary.com/dyjxruqsq/video/upload/so_1,w_1600,q_auto,f_jpg/v1777852514/evoav_horizontal_gugywz.jpg"
+          src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1777852514/evoav_horizontal_gugywz.mp4"></video>
       </div>
-
-      <div>
-        <p class="about__body rv">
-          A EVO AV Factory é uma empresa portuguesa de produção audiovisual especializada em soluções profissionais de som, iluminação, vídeo e palco para concertos, festivais e eventos corporativos. Com uma equipa de técnicos experientes e um inventário premium de equipamento, garantimos produções impecáveis, desde pequenos eventos corporativos até aos maiores festivais ao ar livre.
-        </p>
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="container">
+          <div class="hero__content">
+            <p class="eyebrow" data-reveal>Produção de eventos · Alenquer, Lisboa</p>
+            <h1 class="h-display hero__title" data-reveal style="--d:.08s">Som, luz, vídeo e estruturas <em>para o seu evento.</em></h1>
+            <p class="lead hero__lead" data-reveal style="--d:.16s">Somos uma produtora portuguesa de audiovisual para todo o tipo de eventos e palcos. Concertos, festivais, eventos corporativos e produções ao vivo, com equipa técnica própria e equipamento de referência.</p>
+            <div class="hero__actions" data-reveal style="--d:.24s">
+              <a class="btn btn--primary btn--lg" href="contacto.html">Pedir proposta <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="btn btn--ghost btn--lg" href="portfolio.html">Ver portfólio</a>
+            </div>
+          </div>
+        </div>
+        <div class="hero__bar">
+          <div class="container">
+            <ul class="hero__tags" aria-label="Áreas de atuação">
+              <li>Som</li><li>Luz</li><li>Vídeo</li><li>Estruturas</li><li>Produção</li>
+            </ul>
+            <a class="hero__scroll" href="#sobre">Continuar <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
       </div>
+    </section>
 
-    </div>
-  </div>
-</section>
-
-<!-- ══ VÍDEOS — carousel vertical ══ -->
-<section class="vids" id="portfolio" aria-labelledby="vids-h">
-  <div class="wrap">
-    <div class="vids__header rv">
-      <div>
-        <p class="vids__label">Portfólio</p>
-        <h2 class="vids__heading" id="vids-h">O Nosso <em>Trabalho</em></h2>
+    <!-- ============ SOBRE ============ -->
+    <section class="section" id="sobre">
+      <div class="container">
+        <div class="about__grid">
+          <div class="about__media" data-reveal>
+            <img src="imagens/fotos/about-co2.jpg" width="1400" height="2100" alt="Jatos de CO2 em palco durante um concerto ao ar livre" loading="lazy" />
+            <div class="about__stat"><strong>+100</strong><span>produções realizadas em todo o país</span></div>
+          </div>
+          <div class="about__text">
+            <p class="eyebrow" data-reveal>Sobre nós</p>
+            <h2 class="h-section" data-reveal style="--d:.06s">Tornamos palpável aquilo que é visionado por quem confia em nós.</h2>
+            <div data-reveal style="--d:.12s">
+              <p class="lead" style="margin-top:20px">A Sweet River Audiovisuais é uma produtora portuguesa de audiovisual para todo o tipo de eventos e palcos, sediada em Alenquer e a operar em todo o território nacional.</p>
+              <p>Trabalhamos em conjunto com parceiros e técnicos especializados para produzir um evento à medida de cada cliente. Do planeamento em pré-produção à última nota, garantimos que cada detalhe é executado com rigor, pontualidade e paixão pelo palco.</p>
+            </div>
+            <ul class="pillars" data-reveal style="--d:.18s">
+              <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10h18M5 10V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M4 10l1 10h14l1-10M9 14v3M15 14v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Concertos e festivais</li>
+              <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h16M6 20V8l6-4 6 4v12M10 20v-5h4v5M9 11h.01M15 11h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Eventos corporativos</li>
+              <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16v10H4zM10 10l4 2-4 2zM8 20h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Produções ao vivo</li>
+            </ul>
+          </div>
+        </div>
+        <div class="values">
+          <div data-reveal><h3>Competência</h3><p>Anos de experiência prática em produção de eventos ao vivo, de pequenas conferências a grandes festivais ao ar livre.</p></div>
+          <div data-reveal style="--d:.08s"><h3>Fiabilidade</h3><p>Pontuais e rigorosos em cada produção. Planeamos tudo antes, para que no dia nada falhe.</p></div>
+          <div data-reveal style="--d:.16s"><h3>Paixão</h3><p>Vivemos para o palco. Cada evento é tratado como se fosse o nosso.</p></div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="carousel" id="carousel">
-
-      <!-- Prev arrow -->
-      <button class="car-arrow car-arrow--prev" id="carPrev" aria-label="Vídeo anterior">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M14 5l-7 6 7 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <!-- Cards -->
-      <div class="car-track" id="carTrack" aria-live="polite">
-
-        <div class="car-slide" data-idx="0" data-state="active">
-          <video src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1777852296/evoav_vertical_mxsv4k.mp4" muted loop playsinline></video>
-          <button class="car-slide__vol" aria-label="Ativar som" title="Volume">
-            <!-- muted icon -->
-            <svg class="vol-icon vol-icon--off" width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <!-- sound icon -->
-            <svg class="vol-icon vol-icon--on" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <span class="car-slide__label">Vídeo 01</span>
+    <!-- ============ SERVIÇOS ============ -->
+    <section class="section section--alt" id="servicos">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>Serviços</p>
+          <h2 class="h-section" data-reveal style="--d:.06s">Tudo o que um evento precisa, numa só equipa.</h2>
+          <p class="lead" data-reveal style="--d:.12s">Do som à transmissão em direto, reunimos todas as valências técnicas para que o cliente tenha um único interlocutor do início ao fim.</p>
         </div>
 
-        <div class="car-slide" data-idx="1" data-state="next">
-          <video src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1777851302/EvoAvFactoryV2_rrsh4a.mp4" muted loop playsinline></video>
-          <button class="car-slide__vol" aria-label="Ativar som" title="Volume">
-            <svg class="vol-icon vol-icon--off" width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <svg class="vol-icon vol-icon--on" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <span class="car-slide__label">Vídeo 02</span>
+        <div class="services">
+          <article class="service" data-reveal>
+            <div class="service__media"><img src="imagens/fotos/servico-som.jpg" width="1000" height="1500" alt="Line array suspenso numa estrutura de truss" loading="lazy" /></div>
+            <div class="service__body">
+              <span class="service__num">01</span>
+              <h3 class="h-card">Sistemas de som</h3>
+              <p>Line arrays de topo, monitores profissionais e mesas de mistura digitais para uma cobertura áudio potente e cristalina.</p>
+              <ul class="service__list">
+                <li><span>Line array JBL Vertec 89 de grande formato</span></li>
+                <li><span>Line array dB Technologies DVA T12</span></li>
+                <li><span>Mesas de mistura digitais Yamaha e DiGiCo</span></li>
+                <li><span>Sistemas de monitorização profissional</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service" data-reveal style="--d:.08s">
+            <div class="service__media"><img src="imagens/fotos/servico-iluminacao.jpg" width="1000" height="1500" alt="Palco em arco com desenho de luz azul num festival" loading="lazy" /></div>
+            <div class="service__body">
+              <span class="service__num">02</span>
+              <h3 class="h-card">Design de iluminação</h3>
+              <p>Moving heads, luzes cénicas e programação avançada para criar ambientes imersivos em qualquer palco.</p>
+              <ul class="service__list">
+                <li><span>Moving heads wash, beam e spot</span></li>
+                <li><span>Sistemas LED PAR e estroboscópios</span></li>
+                <li><span>Consolas MA Lighting e Avolites</span></li>
+                <li><span>Haze e efeitos atmosféricos</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service" data-reveal style="--d:.16s">
+            <div class="service__media"><img src="imagens/fotos/servico-led.jpg" width="1000" height="1331" alt="Pormenor de um painel LED de alta resolução" loading="lazy" /></div>
+            <div class="service__body">
+              <span class="service__num">03</span>
+              <h3 class="h-card">Vídeo e LED</h3>
+              <p>Ecrãs LED de alta resolução, processamento de vídeo e câmaras ao vivo para o máximo impacto visual, em interior ou exterior.</p>
+              <ul class="service__list">
+                <li><span>Painéis LED de P2.6 a P6</span></li>
+                <li><span>Soluções indoor e outdoor</span></li>
+                <li><span>Rigging e ground support</span></li>
+                <li><span>Gestão multi-ecrã 4K</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service" data-reveal>
+            <div class="service__media"><img src="imagens/fotos/servico-estruturas.jpg" width="1000" height="1500" alt="Equipa técnica a montar estrutura de truss numa tenda de palco" loading="lazy" /></div>
+            <div class="service__body">
+              <span class="service__num">04</span>
+              <h3 class="h-card">Palco e rigging</h3>
+              <p>Estruturas de truss, palcos modulares e sistemas de rigging seguros e certificados, dimensionados para cada evento.</p>
+              <ul class="service__list">
+                <li><span>Palcos modulares e estrados</span></li>
+                <li><span>Estruturas de truss</span></li>
+                <li><span>Rigging certificado</span></li>
+                <li><span>Régies e coberturas</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service" data-reveal style="--d:.08s">
+            <div class="service__media"><img src="imagens/fotos/servico-streaming.jpg" width="1000" height="664" alt="Câmara de vídeo profissional a captar um evento" loading="lazy" /></div>
+            <div class="service__body">
+              <span class="service__num">05</span>
+              <h3 class="h-card">Streaming profissional</h3>
+              <p>Transmissão ao vivo com câmaras óticas e robóticas PTZ, com qualidade broadcast para qualquer plataforma.</p>
+              <ul class="service__list">
+                <li><span>Câmaras óticas Full HD e 4K</span></li>
+                <li><span>Câmaras robóticas PTZ com controlo remoto</span></li>
+                <li><span>Realização multi-câmara ao vivo</span></li>
+                <li><span>YouTube, Facebook e plataformas corporativas</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service" data-reveal style="--d:.16s">
+            <div class="service__media"><img src="imagens/fotos/servico-producao.jpg" width="1000" height="667" alt="Equipa de produção a preparar um estúdio com iluminação" loading="lazy" /></div>
+            <div class="service__body">
+              <span class="service__num">06</span>
+              <h3 class="h-card">Produção técnica</h3>
+              <p>Planeamento rigoroso e coordenação entre artistas, clientes e equipas técnicas no terreno.</p>
+              <ul class="service__list">
+                <li><span>Logística, alojamento e acompanhamento</span></li>
+                <li><span>Agenciamento de artistas</span></li>
+                <li><span>Programação e direção técnica</span></li>
+                <li><span>Equipas técnicas especializadas</span></li>
+              </ul>
+            </div>
+          </article>
         </div>
 
-        <div class="car-slide" data-idx="2" data-state="hidden-l">
-          <video src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1778270423/RECAP_TORRES_VEDRAAS_zookxa.mp4" muted loop playsinline></video>
-          <button class="car-slide__vol" aria-label="Ativar som" title="Volume">
-            <svg class="vol-icon vol-icon--off" width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <svg class="vol-icon vol-icon--on" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-              <path d="M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <span class="car-slide__label">Vídeo 03</span>
+        <div class="fullprod" data-reveal>
+          <div>
+            <p class="eyebrow">Produção completa</p>
+            <h3>Do palco aos camarins, tratamos de tudo.</h3>
+            <p>Para festas municipais, festivais e eventos de maior dimensão, asseguramos toda a infraestrutura e os serviços de apoio, com um único ponto de contacto.</p>
+            <a class="btn btn--primary" href="contacto.html">Falar com a equipa <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <ul class="fullprod__list">
+            <li>Palcos e estruturas</li>
+            <li>Tendas e coberturas</li>
+            <li>Baias de segurança e vedações</li>
+            <li>Geradores e distribuição elétrica</li>
+            <li>Camarins e infraestruturas de apoio</li>
+            <li>Mobiliário e equipamentos para eventos</li>
+            <li>Climatização</li>
+            <li>Sanitários e WC portáteis</li>
+            <li>Efeitos especiais</li>
+            <li>Agenciamento de artistas</li>
+            <li>Departamento criativo e design</li>
+            <li>Marketing, comunicação e publicidade</li>
+            <li>Fotografia, vídeo e transmissões em direto</li>
+            <li>Cenografia e decoração</li>
+            <li>Logística e transportes</li>
+            <li>Recursos humanos e equipas técnicas</li>
+          </ul>
         </div>
-
       </div>
+    </section>
 
-      <!-- Next arrow -->
-      <button class="car-arrow car-arrow--next" id="carNext" aria-label="Próximo vídeo">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M8 5l7 6-7 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="slider-dots" id="carDots" aria-hidden="true">
-      <button class="dot active" data-dot="0"></button>
-      <button class="dot" data-dot="1"></button>
-      <button class="dot" data-dot="2"></button>
-    </div>
-  </div>
-</section>
-
-<!-- ══ CLIENT LOGOS ══ -->
-<section class="clients" id="clientes" aria-labelledby="clients-h">
-  <div class="wrap">
-    <p class="clients__label rv" id="clients-h">CLIENTES QUE JÁ TRABALHÁMOS</p>
-    <div class="clients__row rv rv-1">
-      <div class="client-logo"><span>Câmara Municipal<br>de Santarém</span></div>
-      <div class="client-logo"><span>Câmara Municipal<br>de Torres Vedras</span></div>
-      <div class="client-logo"><span>Câmara Municipal<br>de Alenquer</span></div>
-      <div class="client-logo"><span>Câmara Municipal<br>de Azambuja</span></div>
-      <div class="client-logo"><span>Carnaval de<br>Torres Vedras</span></div>
-      <div class="client-logo"><span>Alma do<br>Vinho</span></div>
-      <div class="client-logo"><span>Smile<br>Comunicação</span></div>
-      <div class="client-logo"><span>Câmara Municipal<br>de Sobral de Monte Agraço</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FOOTER ══ -->
-<footer class="footer" aria-label="Rodapé">
-  <div class="wrap">
-    <div class="footer__main">
-      <div>
-        <div class="footer__logo"><img src="imagens/evo_av.png" alt="EVO AV Factory" /></div>
-        <p class="footer__tag">Som · Iluminação · Vídeo · Produção de Palco</p>
+    <!-- ============ PORTFÓLIO ============ -->
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow" data-reveal>Portfólio</p>
+            <h2 class="h-section" data-reveal style="--d:.06s">Já fizemos parte.</h2>
+            <p class="lead" data-reveal style="--d:.12s">Alguns momentos de eventos que produzimos. Clique para reproduzir.</p>
+          </div>
+          <a class="link-arrow" href="portfolio.html" data-reveal>Ver portfólio completo <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="reels">
+          <div class="vtile" role="button" tabindex="0" aria-label="Reproduzir vídeo: showreel" data-reveal
+               data-src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1777851302/EvoAvFactoryV2_rrsh4a.mp4">
+            <img src="https://res.cloudinary.com/dyjxruqsq/video/upload/so_2,w_720,q_auto,f_jpg/v1777851302/EvoAvFactoryV2_rrsh4a.jpg" width="720" height="1280" alt="" loading="lazy" />
+            <div class="vtile__play"><span class="vtile__btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="vtile__label">Showreel</span></div>
+          </div>
+          <div class="vtile" role="button" tabindex="0" aria-label="Reproduzir vídeo: recap do Carnaval de Torres Vedras" data-reveal style="--d:.08s"
+               data-src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1778270423/RECAP_TORRES_VEDRAAS_zookxa.mp4">
+            <img src="https://res.cloudinary.com/dyjxruqsq/video/upload/so_2,w_720,q_auto,f_jpg/v1778270423/RECAP_TORRES_VEDRAAS_zookxa.jpg" width="720" height="1280" alt="" loading="lazy" />
+            <div class="vtile__play"><span class="vtile__btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="vtile__label">Recap · Carnaval de Torres Vedras</span></div>
+          </div>
+          <div class="vtile" role="button" tabindex="0" aria-label="Reproduzir vídeo: highlights" data-reveal style="--d:.16s"
+               data-src="https://res.cloudinary.com/dyjxruqsq/video/upload/q_auto/f_auto/v1777852296/evoav_vertical_mxsv4k.mp4">
+            <img src="https://res.cloudinary.com/dyjxruqsq/video/upload/so_2,w_720,q_auto,f_jpg/v1777852296/evoav_vertical_mxsv4k.jpg" width="720" height="1280" alt="" loading="lazy" />
+            <div class="vtile__play"><span class="vtile__btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span><span class="vtile__label">Highlights</span></div>
+          </div>
+        </div>
       </div>
-      <div>
-        <p class="footer__col-title">Navegação</p>
-        <nav class="footer__nav" aria-label="Navegação rodapé">
-          <a href="#inicio">Início</a>
-          <a href="#sobre-nos">Sobre Nós</a>
-          <a href="#portfolio">Portfólio</a>
-          <a href="#clientes">Clientes</a>
-          <a href="contacto.html">Contacto</a>
-        </nav>
+    </section>
+
+    <!-- ============ CLIENTES ============ -->
+    <section class="section section--alt" id="clientes">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <p class="eyebrow" data-reveal>Clientes</p>
+          <h2 class="h-section" data-reveal style="--d:.06s">A confiança de municípios, promotores e marcas.</h2>
+          <p class="lead" data-reveal style="--d:.12s">Trabalhamos com câmaras municipais, festivais e empresas em todo o território nacional.</p>
+        </div>
+        <ul class="logos" aria-label="Clientes com quem já trabalhámos">
+          <li data-reveal><img src="imagens/clientes/santarem.png" width="170" height="108" alt="Câmara Municipal de Santarém" loading="lazy" /></li>
+          <li data-reveal style="--d:.05s"><img src="imagens/clientes/torres-vedras.png" width="408" height="106" alt="Câmara Municipal de Torres Vedras" loading="lazy" /></li>
+          <li data-reveal style="--d:.1s"><img src="imagens/clientes/alenquer.png" width="370" height="110" alt="Câmara Municipal de Alenquer" loading="lazy" /></li>
+          <li data-reveal style="--d:.15s"><img src="imagens/clientes/azambuja.png" width="900" height="635" alt="Município de Azambuja" loading="lazy" /></li>
+          <li data-reveal><img src="imagens/clientes/sobral.png" width="413" height="434" alt="Câmara Municipal de Sobral de Monte Agraço" loading="lazy" /></li>
+          <li data-reveal style="--d:.05s"><span class="logos__text">Carnaval de<br />Torres Vedras</span></li>
+          <li data-reveal style="--d:.1s"><img src="imagens/clientes/alma-do-vinho.png" width="363" height="379" alt="Alma do Vinho, Alenquer" loading="lazy" /></li>
+          <li data-reveal style="--d:.15s"><img src="imagens/clientes/smile.png" width="180" height="51" alt="Smile Comunicação" loading="lazy" /></li>
+        </ul>
+        <ul class="events" data-reveal>
+          <li class="events__label">Eventos em que já fizemos parte</li>
+          <li>Festas de São José · Santarém</li>
+          <li>Carnaval de Torres Vedras</li>
+          <li>Alma do Vinho · Alenquer</li>
+          <li>Avinho · Azambuja</li>
+          <li>Festas do Município · Azambuja</li>
+          <li>Eventos corporativos e privados</li>
+        </ul>
       </div>
-      <div class="footer__contact">
-        <p class="footer__col-title">Contacto</p>
-        <p>
-          <a href="mailto:geral@riverevo.com">geral@riverevo.com</a><br>
-          <a href="tel:+351915401322">+351 915 401 322</a><br><br>
-          Segunda a Sexta: 11:00 – 19:00
-        </p>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="section cta" id="contacto">
+      <div class="container cta__grid">
+        <div data-reveal>
+          <p class="eyebrow" style="color:#8fa0ff">Contacto</p>
+          <h2>Fazemos parte do seu evento?</h2>
+          <p>Conte-nos o que precisa: local, data e dimensão. Respondemos com uma proposta técnica à medida.</p>
+        </div>
+        <div class="cta__actions" data-reveal style="--d:.1s">
+          <a class="btn btn--primary btn--lg" href="contacto.html">Pedir proposta <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn--ghost btn--lg" href="tel:+351924106324">924 106 324</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="index.html" class="brand" aria-label="Sweet River Audiovisuais">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__text"><span class="brand__name">Sweet River</span><span class="brand__sub">Audiovisuais</span></span>
+          </a>
+          <p class="footer__tagline">Produtora portuguesa de audiovisual para concertos, festivais, eventos corporativos e produções ao vivo.</p>
+          <div class="footer__social">
+            <a href="https://www.instagram.com/sweetriver.av/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg></a>
+            <a href="https://www.tiktok.com/@sweet.river.audiov" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.8a4.3 4.3 0 0 1-1-.1v6.6a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.9a2.7 2.7 0 1 0 1.8 2.6V2h2.9a4.3 4.3 0 0 0 4.3 4.3v2.9a7.2 7.2 0 0 1-3.3-.8z"/></svg></a>
+            <a href="https://www.facebook.com/search/pages/?q=SRA%20Sweet%20River%20Audiovisuais" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+            <a href="https://www.linkedin.com/search/results/companies/?keywords=SRA%20Sweet%20River%20Audiovisuais" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 2H3.6A1.6 1.6 0 0 0 2 3.6v16.8A1.6 1.6 0 0 0 3.6 22h16.8a1.6 1.6 0 0 0 1.6-1.6V3.6A1.6 1.6 0 0 0 20.4 2zM8 19H5V9h3zM6.5 7.7A1.7 1.7 0 1 1 8.2 6a1.7 1.7 0 0 1-1.7 1.7zM19 19h-3v-4.9c0-1.2 0-2.7-1.6-2.7s-1.9 1.3-1.9 2.6V19h-3V9h2.9v1.4a3.2 3.2 0 0 1 2.9-1.6c3.1 0 3.7 2 3.7 4.7z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h4>Navegação</h4>
+          <ul class="footer__links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="index.html#sobre">Sobre nós</a></li>
+            <li><a href="index.html#servicos">Serviços</a></li>
+            <li><a href="portfolio.html">Portfólio</a></li>
+            <li><a href="index.html#clientes">Clientes</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Serviços</h4>
+          <ul class="footer__links">
+            <li><a href="index.html#servicos">Sistemas de som</a></li>
+            <li><a href="index.html#servicos">Design de iluminação</a></li>
+            <li><a href="index.html#servicos">Vídeo e LED</a></li>
+            <li><a href="index.html#servicos">Palco e rigging</a></li>
+            <li><a href="index.html#servicos">Streaming profissional</a></li>
+            <li><a href="index.html#servicos">Produção técnica</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul class="footer__links">
+            <li><a href="mailto:geral@swtriver.com"><strong>geral@swtriver.com</strong></a></li>
+            <li><a href="tel:+351924106324">924 106 324</a></li>
+            <li><a href="tel:+351915401322">915 401 322</a></li>
+            <li>Alenquer, Lisboa</li>
+            <li>Segunda a sexta, 11:00 às 19:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> Sweet River Audiovisuais. Todos os direitos reservados.</span>
+        <span>Anteriormente EVO AV Factory</span>
       </div>
     </div>
-    <div class="footer__bottom">
-      <p class="footer__copy">&copy; 2024 EVO AV Factory. Todos os direitos reservados.</p>
-      <a href="https://www.evoav.com" class="footer__web" target="_blank" rel="noopener">www.evoav.com</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-/* ── Grain canvas ── */
-(() => {
-  const canvas = document.getElementById('grain');
-  const ctx    = canvas.getContext('2d');
-  const SIZE   = 200;
-  canvas.width = canvas.height = SIZE;
-
-  function makeGrain() {
-    const img = ctx.createImageData(SIZE, SIZE);
-    for (let i = 0; i < img.data.length; i += 4) {
-      const v = Math.random() * 255 | 0;
-      img.data[i]     = v;
-      img.data[i + 1] = v;
-      img.data[i + 2] = v;
-      img.data[i + 3] = 255;
-    }
-    ctx.putImageData(img, 0, 0);
-    canvas.style.backgroundImage  = `url(${canvas.toDataURL()})`;
-    canvas.style.backgroundRepeat = 'repeat';
-    canvas.style.backgroundSize   = `${SIZE}px ${SIZE}px`;
-  }
-
-  makeGrain();
-  setInterval(makeGrain, 150);
-})();
-
-(() => {
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mobile  = window.innerWidth < 860;
-
-  /* ── Custom cursor ── */
-  if (!mobile && !reduced) {
-    const co = document.getElementById('cur-outer');
-    const ci = document.getElementById('cur-inner');
-    let ox = 0, oy = 0, tx = 0, ty = 0;
-    document.addEventListener('mousemove', e => {
-      tx = e.clientX; ty = e.clientY;
-      ci.style.left = tx + 'px'; ci.style.top = ty + 'px';
-    });
-    (function loop() {
-      ox += (tx - ox) * 0.11; oy += (ty - oy) * 0.11;
-      co.style.left = ox + 'px'; co.style.top = oy + 'px';
-      requestAnimationFrame(loop);
-    })();
-    document.querySelectorAll('a,button,.slide,.client-logo').forEach(el => {
-      el.addEventListener('mouseenter', () => co.classList.add('big'));
-      el.addEventListener('mouseleave', () => co.classList.remove('big'));
-    });
-  }
-
-  /* ── Scroll progress ── */
-  const bar = document.getElementById('progress');
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (h > 0 ? window.scrollY / h * 100 : 0) + '%';
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
-
-  /* ── JS smooth scroll ── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
-      const t = document.getElementById(id);
-      if (!t) return;
-      e.preventDefault();
-      if (reduced) { t.scrollIntoView(); return; }
-      const s = window.scrollY;
-      const end = t.getBoundingClientRect().top + s - 80;
-      const d = end - s, dur = Math.min(Math.abs(d) * 0.5, 900);
-      let ts = null;
-      const ease = t2 => t2 < .5 ? 2*t2*t2 : -1+(4-2*t2)*t2;
-      (function step(now) {
-        if (!ts) ts = now;
-        const p = Math.min((now - ts) / dur, 1);
-        window.scrollTo(0, s + d * ease(p));
-        if (p < 1) requestAnimationFrame(step);
-      })(performance.now());
-    });
-  });
-
-  /* ── Hero load sequence ── */
-  const title = document.getElementById('heroTitle');
-  const sub   = document.getElementById('heroSub');
-  const cta   = document.getElementById('heroCta');
-  const lines = title ? title.querySelectorAll('.ln-i') : [];
-
-  function show(el, delay) {
-    setTimeout(() => {
-      el.style.transition = 'opacity .7s cubic-bezier(0.16,1,0.3,1), transform .7s cubic-bezier(0.16,1,0.3,1)';
-      el.style.opacity = '1'; el.style.transform = 'none';
-    }, delay);
-  }
-
-  if (reduced) {
-    lines.forEach(l => l.style.transform = 'none');
-    if (sub) { sub.style.opacity='1'; sub.style.transform='none'; }
-    if (cta) { cta.style.opacity='1'; cta.style.transform='none'; }
-    nav.classList.add('ready');
-  } else {
-    setTimeout(() => nav.classList.add('ready'), 150);
-    lines.forEach((l, i) => {
-      setTimeout(() => {
-        l.style.transition = `transform .9s cubic-bezier(0.22,1,0.36,1)`;
-        l.style.transform = 'none';
-      }, 400 + i * 110);
-    });
-    if (sub) show(sub, 900);
-    if (cta) show(cta, 1100);
-  }
-
-  /* ── Hero lines start hidden ── */
-  lines.forEach(l => { if (!reduced) l.style.transform = 'translateY(110%)'; });
-
-  /* ── Intersection observer: generic reveals ── */
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('on');
-        // After transition ends, unlock overflow so glow isn't clipped
-        if (e.target.classList.contains('sh')) {
-          e.target.addEventListener('transitionend', () => {
-            e.target.classList.add('glow-ready');
-          }, { once: true });
-        }
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
-
-  document.querySelectorAll('.rv, .about__label, .about__divider, .sh').forEach(el => obs.observe(el));
-
-  if (reduced) {
-    document.querySelectorAll('.rv, .about__label, .about__divider, .sh').forEach(el => {
-      el.classList.add('on', 'glow-ready'); el.style.opacity='1'; el.style.transform='none';
-    });
-  }
-
-  /* ── Magnetic buttons ── */
-  if (!mobile && !reduced) {
-    document.querySelectorAll('.mag').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width/2;
-        const y = e.clientY - r.top  - r.height/2;
-        btn.style.transform = `translate(${x*.2}px,${y*.2}px)`;
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transition = 'transform .5s cubic-bezier(0.16,1,0.3,1), box-shadow .3s';
-        btn.style.transform = '';
-        setTimeout(() => btn.style.transition = '', 500);
-      });
-      btn.addEventListener('mouseenter', () => {
-        btn.style.transition = 'transform .1s, box-shadow .3s';
-      });
-    });
-  }
-
-  /* ── Hamburger ── */
-  const burger   = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  function openMenu() {
-    mobileMenu.classList.add('open');
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    burger.classList.add('open');
-    burger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeMenu() {
-    mobileMenu.classList.remove('open');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    burger.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  burger.addEventListener('click', () => {
-    mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
-  });
-  mobileMenu.addEventListener('click', e => {
-    if (e.target.tagName === 'A') closeMenu();
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
-  });
-
-  /* ════════════════════════════════
-     CAROUSEL — infinite loop
-  ════════════════════════════════ */
-  const carSlides = Array.from(document.querySelectorAll('.car-slide'));
-  const carDots   = Array.from(document.querySelectorAll('#carDots .dot'));
-  const carPrev   = document.getElementById('carPrev');
-  const carNext   = document.getElementById('carNext');
-  const carEl     = document.getElementById('carousel');
-  const n = carSlides.length;
-  let cur = 0;
-  let animating = false;
-
-  // States for 3-card coverflow: active (center), prev (left), next (right), hidden-l, hidden-r
-  // For n slides, we assign positions based on distance from cur (modular)
-  function stateFor(idx) {
-    const diff = ((idx - cur) % n + n) % n; // 0..n-1
-    if (diff === 0)       return 'active';
-    if (diff === 1)       return 'next';
-    if (diff === n - 1)   return 'prev';
-    // more than 1 away — hide on appropriate side
-    return diff < n / 2 ? 'hidden-r' : 'hidden-l';
-  }
-
-  function applyStates() {
-    carSlides.forEach((s, i) => {
-      s.dataset.state = stateFor(i);
-    });
-    carDots.forEach((d, i) => d.classList.toggle('active', i === cur));
-  }
-
-  const THUMB_TIME = 1; // segundo de thumbnail para vídeos inativos
-
-  function updatePlayback() {
-    carSlides.forEach((s, i) => {
-      const v = s.querySelector('video');
-      if (i === cur) {
-        v.currentTime = 0;
-        v.play().catch(() => {});
-      } else {
-        v.pause();
-        // seek para frame fixo só se ainda não está lá (evita flash repetido)
-        if (Math.abs(v.currentTime - THUMB_TIME) > 0.5) {
-          v.currentTime = THUMB_TIME;
-        }
-      }
-    });
-  }
-
-  function go(dir) {
-    if (animating) return;
-    animating = true;
-    carSlides[cur].querySelector('video').muted = true;
-    updateVolIcon(carSlides[cur], true);
-    cur = ((cur + dir) % n + n) % n;
-    applyStates();
-    updatePlayback();
-    setTimeout(() => animating = false, 680);
-  }
-
-  // Volume toggle per slide
-  function updateVolIcon(slide, muted) {
-    slide.querySelector('.vol-icon--off').style.display = muted ? '' : 'none';
-    slide.querySelector('.vol-icon--on').style.display  = muted ? 'none' : '';
-  }
-
-  carSlides.forEach(slide => {
-    const btn = slide.querySelector('.car-slide__vol');
-    const vid = slide.querySelector('video');
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      vid.muted = !vid.muted;
-      updateVolIcon(slide, vid.muted);
-    });
-  });
-
-  // Arrow buttons
-  carPrev.addEventListener('click', () => go(-1));
-  carNext.addEventListener('click', () => go(+1));
-
-  // Dots
-  carDots.forEach(d => d.addEventListener('click', () => {
-    const t = +d.dataset.dot;
-    if (t === cur) return;
-    carSlides[cur].querySelector('video').muted = true;
-    updateVolIcon(carSlides[cur], true);
-    cur = t;
-    applyStates();
-    updatePlayback();
-  }));
-
-  // Click side cards to navigate
-  carSlides.forEach((s, i) => {
-    s.addEventListener('click', () => {
-      const state = s.dataset.state;
-      if (state === 'prev') go(-1);
-      else if (state === 'next') go(+1);
-    });
-  });
-
-  // Swipe/drag
-  let swipeStart = 0, swiping = false;
-  carEl.addEventListener('mousedown',  e => { swipeStart = e.clientX; swiping = true; });
-  carEl.addEventListener('touchstart', e => { swipeStart = e.touches[0].clientX; swiping = true; }, { passive: true });
-  function endSwipe(ex) {
-    if (!swiping) return; swiping = false;
-    const d = swipeStart - ex;
-    if (Math.abs(d) > 48) go(d > 0 ? 1 : -1);
-  }
-  carEl.addEventListener('mouseup',  e => endSwipe(e.clientX));
-  carEl.addEventListener('touchend', e => endSwipe(e.changedTouches[0].clientX));
-
-  // Keyboard
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  go(-1);
-    if (e.key === 'ArrowRight') go(+1);
-  });
-
-  // Init
-  applyStates();
-  updatePlayback();
-
-})();
-</script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
