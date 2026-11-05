@@ -49,7 +49,7 @@
       <div class="container">
         <p class="eyebrow" data-reveal>Contacto</p>
         <h1 class="h-display" data-reveal style="--d:.06s">Fazemos parte do seu evento?</h1>
-        <p class="lead" data-reveal style="--d:.12s">Diga-nos o que precisa e preparamos uma proposta técnica à medida. Respondemos normalmente no próprio dia útil.</p>
+        <p class="lead" data-reveal style="--d:.12s">Marque uma reunião online de 30 minutos, ou fale connosco por email ou telefone. Respondemos normalmente no próprio dia útil.</p>
       </div>
     </header>
 
@@ -84,76 +84,17 @@
           </div>
         </div>
 
-        <div class="form-card" data-reveal style="--d:.1s">
-          <h2>Pedir proposta</h2>
-          <p>Preencha o formulário e receberá uma proposta técnica personalizada.</p>
-          <form class="form" id="contactForm" action="https://formspree.io/f/maqvjevz" method="POST" novalidate>
-            <input type="hidden" name="_subject" value="Novo pedido de proposta · site Sweet River" />
-            <input class="form__honey" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <div class="form__row">
-              <div class="form__field">
-                <label for="nome">Nome <span>*</span></label>
-                <input type="text" id="nome" name="nome" placeholder="O seu nome" required autocomplete="name" />
-              </div>
-              <div class="form__field">
-                <label for="email">Email <span>*</span></label>
-                <input type="email" id="email" name="email" placeholder="nome@empresa.pt" required autocomplete="email" />
-              </div>
-            </div>
-            <div class="form__row">
-              <div class="form__field">
-                <label for="telefone">Telefone</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="9xx xxx xxx" autocomplete="tel" />
-              </div>
-              <div class="form__field">
-                <label for="organizacao">Empresa ou organização</label>
-                <input type="text" id="organizacao" name="organizacao" placeholder="Câmara Municipal, promotor, empresa…" autocomplete="organization" />
-              </div>
-            </div>
-            <div class="form__row">
-              <div class="form__field">
-                <label for="tipo">Tipo de evento</label>
-                <select id="tipo" name="tipo_de_evento">
-                  <option value="" selected>Selecione</option>
-                  <option>Concerto ou festival</option>
-                  <option>Festas municipais</option>
-                  <option>Evento corporativo ou conferência</option>
-                  <option>Casamento ou evento privado</option>
-                  <option>Transmissão em direto</option>
-                  <option>Outro</option>
-                </select>
-              </div>
-              <div class="form__field">
-                <label for="data">Data prevista</label>
-                <input type="date" id="data" name="data_prevista" />
-              </div>
-            </div>
-            <div class="form__field">
-              <label for="mensagem">Mensagem <span>*</span></label>
-              <textarea id="mensagem" name="mensagem" placeholder="Local, dimensão do evento e necessidades técnicas (som, luz, vídeo, palco, streaming…)" required></textarea>
-            </div>
-            <p class="form__hint">Os dados enviados são usados apenas para responder a este pedido, nos termos da <a href="legal.html#privacidade">política de privacidade</a>.</p>
-            <div class="form__status" id="formStatus" role="status" aria-live="polite"></div>
-            <button type="submit" class="btn btn--primary btn--lg form__submit">Enviar pedido <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          </form>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============ REUNIÃO ONLINE ============ -->
-    <section class="section" id="reuniao">
-      <div class="container">
-        <div class="section-head section-head--center">
-          <p class="eyebrow" data-reveal>Reunião online</p>
-          <h2 class="h-section" data-reveal style="--d:.06s">Prefere falar connosco? Marque uma reunião.</h2>
-          <p class="lead" data-reveal style="--d:.12s">Escolha o dia e a hora que lhe derem jeito. Recebe de imediato o convite com o link do Google Meet.</p>
-        </div>
-        <div class="booking" data-reveal>
+        <div class="booking-card" id="reuniao" data-reveal style="--d:.1s">
+          <div class="booking-card__head">
+            <h2>Marcar reunião</h2>
+            <p>Escolha o dia e a hora que lhe derem jeito. Recebe de imediato o convite com o link do Google Meet.</p>
+          </div>
           <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2dxiLxt9Z3PYQD8b67V5HNtiJbDsd3cSq2D1EoiRdAi0SQQ4Rsc4NX3Q77rBlpBlhRh99kxcdv?gv=true" title="Marcar reunião com a Sweet River Audiovisuais" loading="lazy"></iframe>
         </div>
+
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
