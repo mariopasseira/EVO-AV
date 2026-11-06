@@ -43,6 +43,38 @@
     });
   }
 
+  /* ---- Secção ativa no menu enquanto se percorre a página ---- */
+  (function () {
+    if (!links) return;
+    var pairs = [];
+    [].forEach.call(links.querySelectorAll('a:not(.nav__cta)'), function (a) {
+      var href = a.getAttribute('href') || '';
+      var id = href.charAt(0) === '#' ? href.slice(1) : (href === 'index.html' ? 'inicio' : (href === 'portfolio.html' ? 'portfolio' : ''));
+      var el = id && document.getElementById(id);
+      if (el) pairs.push({ a: a, el: el });
+    });
+    if (pairs.length < 2) return;
+    var current = null, ticking = false;
+    function update() {
+      ticking = false;
+      var line = window.scrollY + window.innerHeight * 0.35;
+      var pick = pairs[0];
+      for (var i = 0; i < pairs.length; i++) {
+        if (pairs[i].el.getBoundingClientRect().top + window.scrollY <= line) pick = pairs[i];
+      }
+      if (pick === current) return;
+      current = pick;
+      pairs.forEach(function (p) {
+        if (p === pick) p.a.setAttribute('aria-current', 'location');
+        else p.a.removeAttribute('aria-current');
+      });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+
   /* ---- Revelação suave ao entrar no ecrã ---- */
   var revealEls = document.querySelectorAll('[data-reveal]');
   if ('IntersectionObserver' in window && revealEls.length) {
