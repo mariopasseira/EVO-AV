@@ -58,6 +58,10 @@
   } else {
     revealEls.forEach(function (el) { el.classList.add('is-in'); });
   }
+  /* rede de segurança: nada fica escondido se o observador não disparar */
+  function revealAll() { revealEls.forEach(function (el) { el.classList.add('is-in'); }); }
+  setTimeout(revealAll, 3000);
+  window.addEventListener('pageshow', function (e) { if (e.persisted) revealAll(); });
 
   /* ---- Vídeos: poster até clique, depois reprodução ---- */
   document.querySelectorAll('.vtile[data-src]').forEach(function (tile) {
