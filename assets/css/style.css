@@ -157,22 +157,28 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 
 @media (max-width: 900px) {
   .nav__toggle { display: inline-flex; }
+  .brand { position: relative; z-index: 2; }
+  .nav.menu-open { color: var(--ink); }
+  .nav.menu-open .brand__mark { background: var(--navy); }
+  .nav.menu-open::before { content: ""; position: fixed; inset: 0; z-index: 0; background: rgba(11, 18, 64, 0.45); }
   .nav__links {
-    position: fixed; inset: 0; z-index: 1;
-    flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px;
-    padding: 110px var(--gutter) 40px;
-    background: var(--navy);
-    color: #fff;
-    opacity: 0; visibility: hidden; transform: translateY(-8px);
-    transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s;
+    position: fixed; left: 0; right: 0; top: 0; z-index: 1;
+    max-height: 100svh; overflow-y: auto;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 78px var(--gutter) 20px;
+    background: #fff; color: var(--ink);
+    box-shadow: 0 24px 48px rgba(11, 18, 64, 0.16);
+    opacity: 0; visibility: hidden; transform: translateY(-10px);
+    transition: opacity .25s var(--ease), transform .25s var(--ease), visibility 0s linear .25s;
   }
   .nav__links.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
-  .nav__links a { font-size: clamp(1.6rem, 6vw, 2.2rem); font-weight: 800; padding: 10px 0; opacity: 1; text-transform: uppercase; letter-spacing: -0.01em; }
-  .nav__links a:hover, .nav.is-scrolled .nav__links a:hover { background: transparent; color: #8fa0ff; }
-  .nav__cta { margin: 24px 0 0; padding: 16px 28px; font-size: 1rem !important; text-transform: none !important; }
-  .nav.menu-open { color: #fff; }
-  .nav.menu-open .brand__mark { background: #fff; }
-  .brand { position: relative; z-index: 2; }
+  .nav__links li { border-top: 1px solid var(--line); }
+  .nav__links a { display: block; padding: 15px 0; border-radius: 0; font-size: 1.02rem; font-weight: 600; letter-spacing: 0; opacity: 1; }
+  .nav__links a:hover, .nav.is-scrolled .nav__links a:hover { background: transparent; color: var(--blue); }
+  .nav__links a[aria-current="page"] { color: var(--blue); }
+  .nav__links li:last-child { padding-top: 16px; }
+  .nav__links .nav__cta { display: flex; justify-content: center; width: 100%; margin: 0; padding: 15px 20px; font-size: 0.95rem; border-radius: 12px; box-shadow: none; }
+  .nav__links .nav__cta[aria-current="page"] { color: #fff; }
 }
 
 /* ---------- Hero ---------- */

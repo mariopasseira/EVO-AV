@@ -35,6 +35,9 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') setMenu(false);
     });
+    nav.addEventListener('click', function (e) {
+      if (e.target === nav) setMenu(false);
+    });
     window.addEventListener('resize', function () {
       if (window.innerWidth > 900) setMenu(false);
     });
