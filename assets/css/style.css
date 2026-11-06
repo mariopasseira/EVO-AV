@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sweet River Audiovisuais — folha de estilos partilhada
+   Sweet River Eventos — folha de estilos partilhada
    ========================================================================== */
 
 :root {
@@ -42,6 +42,7 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 img, video { display: block; max-width: 100%; }
 img { height: auto; }
@@ -239,19 +240,19 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 .about__stat strong { font-family: var(--font-d); font-size: 2rem; font-weight: 900; color: var(--navy); line-height: 1; }
 .about__stat span { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
 .about__text p + p { margin-top: 16px; }
-.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 32px; }
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 32px; }
 .pillars li {
   display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r); background: #fff;
   font-family: var(--font-d); font-weight: 700; font-size: 0.9rem; line-height: 1.25; color: var(--navy);
 }
 .pillars svg { width: 24px; height: 24px; color: var(--blue); }
-.values { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line); }
+.values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line); }
 .values h3 { font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
 .values h3::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
 .values p { color: var(--ink-2); font-size: 0.98rem; }
 
 /* ---------- Serviços ---------- */
-.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.4vw, 28px); }
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 28px); }
 .service {
   background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column;
   transition: transform .35s var(--ease), box-shadow .35s var(--ease);
@@ -286,7 +287,7 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 .fullprod h3 { color: #fff; font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom: 14px; }
 .fullprod p { color: rgba(255, 255, 255, 0.75); }
 .fullprod .btn { margin-top: 24px; }
-.fullprod__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 28px; position: relative; z-index: 1; }
+.fullprod__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 28px; position: relative; z-index: 1; }
 .fullprod__list li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; color: rgba(255, 255, 255, 0.88); line-height: 1.4; padding: 6px 0; border-bottom: 1px solid var(--line-dark); }
 .fullprod__list li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: #8fa0ff; }
 
@@ -323,7 +324,7 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 .masonry figure:hover img { transform: scale(1.03); }
 
 /* ---------- Clientes ---------- */
-.logos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .logos li {
   display: flex; align-items: center; justify-content: center; min-height: 140px; padding: 22px 28px;
   background: #fff; border: 1px solid var(--line); border-radius: var(--r);
@@ -331,7 +332,7 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 }
 .logos li:hover { box-shadow: var(--shadow); border-color: #d6daea; }
 .logos img {
-  max-height: 72px; max-width: 180px; width: auto; height: auto; object-fit: contain;
+  max-height: 72px; max-width: min(180px, 100%); min-width: 0; width: auto; height: auto; object-fit: contain;
   filter: grayscale(1); opacity: 0.72; transition: filter .35s var(--ease), opacity .35s var(--ease);
 }
 .logos li:hover img { filter: none; opacity: 1; }
@@ -378,7 +379,7 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 .form-card h2 { font-size: 1.6rem; margin-bottom: 6px; }
 .form-card > p { color: var(--muted); font-size: 0.95rem; margin-bottom: 26px; }
 .form { display: grid; gap: 18px; }
-.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
 .form__field { display: grid; gap: 7px; }
 .form__field label { font-family: var(--font-d); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--navy); }
 .form__field label span { color: var(--blue); }
@@ -398,7 +399,7 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
 .form__honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
 /* ---------- Marcação de reunião (Google Calendar) ---------- */
-.booking-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; }
+.booking-card { scroll-margin-top: 18px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; }
 .booking-card__head { padding: clamp(24px, 3.5vw, 40px) clamp(24px, 3.5vw, 40px) 10px; }
 .booking-card__head h2 { font-size: 1.6rem; margin-bottom: 6px; }
 .booking-card__head p { color: var(--muted); font-size: 0.95rem; }
@@ -465,18 +466,18 @@ html.js .hero [data-reveal], html.js .page-head [data-reveal] { animation: revea
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
-  .logos { grid-template-columns: repeat(3, 1fr); }
+  .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 960px) {
-  .services { grid-template-columns: repeat(2, 1fr); }
-  .about__grid { grid-template-columns: 1fr; }
+  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about__grid { grid-template-columns: minmax(0, 1fr); }
   .about__media { max-width: 520px; }
   .about__stat { left: 16px; bottom: -22px; }
-  .fullprod { grid-template-columns: 1fr; }
-  .cta__grid { grid-template-columns: 1fr; }
+  .fullprod { grid-template-columns: minmax(0, 1fr); }
+  .cta__grid { grid-template-columns: minmax(0, 1fr); }
   .cta__actions { justify-content: flex-start; }
-  .contact__grid { grid-template-columns: 1fr; }
-  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .contact__grid { grid-template-columns: minmax(0, 1fr); }
+  .footer__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .masonry { columns: 2; }
   .section-head--row { flex-direction: column; align-items: flex-start; gap: 16px; }
 }
@@ -492,18 +493,18 @@ html.js .hero [data-reveal], html.js .page-head [data-reveal] { animation: revea
   .hero__lead--short { display: block; font-size: 1rem; line-height: 1.55; margin-bottom: 26px; max-width: 30ch; }
   .hero__actions { gap: 10px; }
   .hero__actions .btn { width: 100%; }
-  .services { grid-template-columns: 1fr; }
-  .pillars { grid-template-columns: 1fr; }
-  .values { grid-template-columns: 1fr; gap: 24px; }
-  .fullprod__list { grid-template-columns: 1fr; }
-  .reels { grid-template-columns: 1fr; }
+  .services { grid-template-columns: minmax(0, 1fr); }
+  .pillars { grid-template-columns: minmax(0, 1fr); }
+  .values { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .fullprod__list { grid-template-columns: minmax(0, 1fr); }
+  .reels { grid-template-columns: minmax(0, 1fr); }
   .vtile { max-width: 420px; margin-inline: auto; }
   .vtile--wide { max-width: none; }
-  .logos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .logos li { min-height: 104px; padding: 18px; }
-  .logos img { max-height: 56px; max-width: 130px; }
-  .form__row { grid-template-columns: 1fr; }
-  .footer__grid { grid-template-columns: 1fr; }
+  .logos img { max-height: 56px; max-width: min(130px, 100%); }
+  .form__row { grid-template-columns: minmax(0, 1fr); }
+  .footer__grid { grid-template-columns: minmax(0, 1fr); }
   .masonry { columns: 1; }
   .page-head { padding-top: 130px; }
   .cta__actions .btn { width: 100%; }

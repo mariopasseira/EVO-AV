@@ -1,4 +1,4 @@
-/* Sweet River Audiovisuais — comportamento partilhado */
+/* Sweet River Eventos — comportamento partilhado */
 (function () {
   'use strict';
 
