@@ -43,6 +43,15 @@
     });
   }
 
+  /* ---- Vídeo do topo: só em ecrãs largos (no telemóvel fica a imagem) ---- */
+  var heroVideo = document.querySelector('.hero video[data-src]');
+  if (heroVideo && window.matchMedia('(min-width: 761px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVideo.poster = heroVideo.getAttribute('data-poster') || '';
+    heroVideo.src = heroVideo.getAttribute('data-src');
+    heroVideo.autoplay = true;
+    heroVideo.play().catch(function () {});
+  }
+
   /* ---- Secção ativa no menu enquanto se percorre a página ---- */
   (function () {
     if (!links) return;

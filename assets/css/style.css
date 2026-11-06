@@ -195,6 +195,12 @@ h1, h2, h3, h4 { font-family: var(--font-d); font-weight: 800; line-height: 1.02
     linear-gradient(180deg, rgba(11, 18, 64, 0.55) 0%, rgba(11, 18, 64, 0.25) 40%, rgba(11, 18, 64, 0.85) 100%),
     linear-gradient(90deg, rgba(11, 18, 64, 0.45) 0%, rgba(11, 18, 64, 0) 60%);
 }
+/* Telemóvel: imagem fixa em vez de vídeo (sem marca de água, sem descarregar 15 MB) e véu mais escuro para o texto respirar */
+@media (max-width: 760px) {
+  .hero__media video { display: none; }
+  .hero__media { background: var(--navy) url('https://res.cloudinary.com/dyjxruqsq/video/upload/so_20,w_900,h_1600,c_fill,g_auto,q_auto,f_jpg/v1777852514/evoav_horizontal_gugywz.jpg') center / cover no-repeat; }
+  .hero__overlay { background: linear-gradient(180deg, rgba(11, 18, 64, 0.62) 0%, rgba(11, 18, 64, 0.66) 45%, rgba(11, 18, 64, 0.94) 100%); }
+}
 .hero__inner { padding: 160px 0 0; width: 100%; }
 .hero__content { max-width: 860px; padding-bottom: clamp(56px, 8vw, 96px); }
 .hero__content .eyebrow { color: #aab6ff; }
@@ -477,11 +483,14 @@ html.js .hero [data-reveal], html.js .page-head [data-reveal] { animation: revea
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  .hero__inner { padding-top: 120px; }
-  .hero__bar .container { justify-content: center; }
-  .hero__scroll { display: none; }
-  .hero__tags { justify-content: center; gap: 8px 16px; }
-  .hero__tags li { gap: 16px; }
+  .hero__inner { padding-top: 112px; }
+  .hero__bar { display: none; }
+  .hero__content { padding-bottom: 48px; }
+  .hero__content .eyebrow { font-size: 0.66rem; letter-spacing: 0.14em; margin-bottom: 14px; }
+  .hero__content .eyebrow::before { display: none; }
+  .hero__title { font-size: 2.35rem; margin-bottom: 18px; }
+  .hero__lead { font-size: 0.98rem; line-height: 1.55; margin-bottom: 28px; }
+  .hero__actions { gap: 10px; }
   .hero__actions .btn { width: 100%; }
   .services { grid-template-columns: 1fr; }
   .pillars { grid-template-columns: 1fr; }
